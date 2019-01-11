@@ -55,7 +55,6 @@ from .qt import (
     QMainWindow,
     QModelIndex,
     QPushButton,
-    QScrollArea,
     QSize,
     QSizePolicy,
     QSplitter,
@@ -385,13 +384,12 @@ class MainWidget(QMainWindow):
 
         self.info_widget = InfoWidget()
 
-        InfoScrollArea = QScrollArea()
-        InfoScrollArea.setWidget(self.info_widget)
-
+        # Create the splitter between Info and Image panes
         v_info_splitter = QSplitter()
         v_info_splitter.setOrientation(Qt.Vertical)
         v_info_splitter.addWidget(self.output_info_tabs)
-        v_info_splitter.addWidget(InfoScrollArea)
+        v_info_splitter.addWidget(self.info_widget)
+        v_info_splitter.setCollapsible(0, False)
 
         h_main_splitter.addWidget(v_info_splitter)
 
