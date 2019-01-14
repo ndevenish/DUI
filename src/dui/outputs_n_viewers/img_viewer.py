@@ -678,7 +678,7 @@ class MyImgWin(QWidget):
         self.btn_play.clicked.connect(self.btn_play_clicked)
 
         nav_box = QHBoxLayout()
-        nav_box.setMargin(0)
+        nav_box.setContentsMargins(0, 0, 0, 0)
         nav_box.addWidget(self.btn_first)
         nav_box.addWidget(self.btn_rev)
         nav_box.addWidget(self.btn_prev)
@@ -749,7 +749,7 @@ class MyImgWin(QWidget):
         self.num_of_imgs_to_add.valueChanged.connect(self.stack_changed_by_user)
 
         top_box = QHBoxLayout()
-        top_box.setMargin(0)
+        top_box.setContentsMargins(0, 0, 0, 0)
         top_box.addWidget(palette_menu_but)
         top_box.addWidget(big_menu_but)
         top_box.addStretch()
@@ -760,17 +760,17 @@ class MyImgWin(QWidget):
         self.info_label = QLabel("X, Y, I = ?,?,?")
 
         top_left_v_box = QVBoxLayout()
-        top_left_v_box.setMargin(0)
+        top_left_v_box.setContentsMargins(0, 0, 0, 0)
         top_left_v_box.addWidget(self._button_panel)
         top_left_v_box.addLayout(top_box)
 
         top_hbox = QHBoxLayout()
-        top_hbox.setMargin(0)
+        top_hbox.setContentsMargins(0, 0, 0, 0)
         top_hbox.addLayout(top_left_v_box)
         top_hbox.addWidget(type_grp)
 
         my_box = QVBoxLayout()
-        my_box.setMargin(0)
+        my_box.setContentsMargins(0, 0, 0, 0)
         my_box.addLayout(top_hbox)
         my_box.addWidget(self.my_scrollable)
         my_box.addWidget(self.info_label)

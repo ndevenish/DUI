@@ -3,7 +3,10 @@
 import os
 import pytest
 
-from dui.qt import QApplication, QPixmap, QStyleFactory
+from dui.qt import QApplication, QPixmap, QStyleFactory, QT5
+
+if QT5:
+    from dui.qt import QGuiApplication
 
 
 def pytest_addoption(parser):
@@ -58,7 +61,10 @@ def screenshots(qtbot, request):
             """Save a widget screenshot."""
             filename = filename or self._filename()
             full_path = os.path.join(self.root_path, filename)
-            QPixmap.grabWidget(widget).save(full_path)
+            if QT5:
+                widget.grab().save(full_path)
+            else:
+                QPixmap.grabWidget(widget).save(full_path)
             self.count += 1
 
         def saveWindow(self, window, filename=None):
@@ -72,9 +78,16 @@ def screenshots(qtbot, request):
 
             window.activateWindow()
             window.raise_()
-            qtbot.waitForWindowShown(window)
-
-            desktop = QPixmap.grabWindow(QApplication.desktop().winId())
+            if QT5:
+                with qtbot.wait_exposed(window):
+                    desktop = QGuiApplication.primaryScreen().grabWindow(
+                        QApplication.desktop().winId()
+                    )
+            else:
+                qtbot.waitForWindowShown(window)
+                # Put an extra fixed delay to try and make this more reliable
+                qtbot.wait(150)
+                desktop = QPixmap.grabWindow(QApplication.desktop().winId())
             crop = desktop.copy(window.frameGeometry())
             crop.save(full_path)
 
